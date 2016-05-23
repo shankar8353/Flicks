@@ -1,8 +1,12 @@
 package com.codepath.flicks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -31,7 +35,25 @@ public class MoviesActivity extends AppCompatActivity implements Consumer<List<M
         }
 
         // Start loading the movies
-        new MovieDbLoader(this);
+        new MovieLoader(this);
+
+        setupListViewListener(lvMovies);
+    }
+
+    private void setupListViewListener(ListView lvMovies) {
+        lvMovies.setOnItemClickListener(
+                new OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Movie movie = movies.get(position);
+                        Class<?> activityClass = movie.isPopular() ? QuickPlayActivity.class : MovieDetailsActivity.class;
+                        Intent i = new Intent(MoviesActivity.this, activityClass);
+                        i.putExtra("movie", movie);
+                        startActivityForResult(i, 0);
+                    }
+                }
+        );
     }
 
     @Override

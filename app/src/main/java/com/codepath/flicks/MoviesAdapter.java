@@ -1,11 +1,13 @@
 package com.codepath.flicks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +36,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     static class PopularMovieViewHolder {
         @BindView(R.id.ivPoster) ImageView ivPoster;
+        @BindView(R.id.imButton) ImageButton imButton;
 
         public PopularMovieViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -59,7 +62,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Get the data item for this position
-        Movie movie = getItem(position);
+        final Movie movie = getItem(position);
 
         if (movie.isPopular()) {
             PopularMovieViewHolder viewHolder;
@@ -73,10 +76,19 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
                 viewHolder = (PopularMovieViewHolder) convertView.getTag();
             }
 
-            String imageUrl = isLandscape() ? movie.getFullBackdropImageUrl() : movie.getBackdropImageUrl();
+            String imageUrl = movie.getBackdropImageUrl();
             Picasso.with(getContext()).load(imageUrl).
                     error(R.mipmap.flix_launcher).
                     transform(new RoundedCornersTransformation(10, 10)).into(viewHolder.ivPoster);
+
+            viewHolder.imButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getContext(), QuickPlayActivity.class);
+                    i.putExtra("movie", movie);
+                    v.getContext().startActivity(i);
+                }
+            });
 
             // Return the completed view to render on screen
             return convertView;

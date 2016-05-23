@@ -1,16 +1,27 @@
 package com.codepath.flicks;
 
+import java.io.Serializable;
+
 /**
  * Created by ssunda1 on 5/17/16.
  */
-public class Movie {
+public class Movie implements Serializable {
 
+    private int id;
     private String title;
     private String overview;
+    private String releaseDate;
     private String posterImageUrl;
     private String backdropImageUrl;
-    private String fullBackdropImageUrl;
     private double avgVote;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -28,6 +39,14 @@ public class Movie {
         this.overview = overview;
     }
 
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
     public String getPosterImageUrl() {
         return posterImageUrl;
     }
@@ -42,14 +61,6 @@ public class Movie {
 
     public void setBackdropImageUrl(String backdropImageUrl) {
         this.backdropImageUrl = backdropImageUrl;
-    }
-
-    public String getFullBackdropImageUrl() {
-        return fullBackdropImageUrl;
-    }
-
-    public void setFullBackdropImageUrl(String fullBackdropImageUrl) {
-        this.fullBackdropImageUrl = fullBackdropImageUrl;
     }
 
     public double getAvgVote() {
