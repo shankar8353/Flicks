@@ -23,13 +23,14 @@ public class QuickPlayActivity extends YouTubeBaseActivity {
 
         ButterKnife.bind(this);
 
-        Movie movie = (Movie) getIntent().getSerializableExtra("movie");
+        final Movie movie = (Movie) getIntent().getSerializableExtra("movie");
 
         player.initialize(API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 // do any work here to cue video, play video, etc.
-                youTubePlayer.loadVideo("43NWzay3W4s");
+                //youTubePlayer.loadVideo("43NWzay3W4s");
+                new MovieTrailerLoader(movie.getId(), new MoviePlayer(youTubePlayer));
             }
 
             @Override
@@ -37,5 +38,21 @@ public class QuickPlayActivity extends YouTubeBaseActivity {
 
             }
         });
+    }
+
+    private static class MoviePlayer implements Consumer<MovieTrailer> {
+
+        private YouTubePlayer youTubePlayer;
+
+        MoviePlayer(YouTubePlayer youTubePlayer) {
+            this.youTubePlayer = youTubePlayer;
+        }
+
+        @Override
+        public void accept(MovieTrailer movieTrailer) {
+            if (movieTrailer != null) {
+                youTubePlayer.loadVideo(movieTrailer.getSource());
+            }
+        }
     }
 }
