@@ -50,7 +50,7 @@ public class MoviesActivity extends AppCompatActivity implements Consumer<List<M
                         Class<?> activityClass = movie.isPopular() ? QuickPlayActivity.class : MovieDetailsActivity.class;
                         Intent i = new Intent(MoviesActivity.this, activityClass);
                         i.putExtra("movie", movie);
-                        startActivityForResult(i, 0);
+                        startActivity(i);
                     }
                 }
         );

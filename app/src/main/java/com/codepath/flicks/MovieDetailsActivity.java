@@ -37,6 +37,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         String imageUrl = movie.getBackdropImageUrl();
         Picasso.with(this).load(imageUrl).
+                placeholder(R.mipmap.flix_launcher).
                 error(R.mipmap.flix_launcher).
                 transform(new RoundedCornersTransformation(10, 10)).into(ivPoster);
         tvTitle.setText(movie.getTitle());

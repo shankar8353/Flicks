@@ -78,6 +78,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
             String imageUrl = movie.getBackdropImageUrl();
             Picasso.with(getContext()).load(imageUrl).
+                    placeholder(R.mipmap.flix_launcher).
                     error(R.mipmap.flix_launcher).
                     transform(new RoundedCornersTransformation(10, 10)).into(viewHolder.ivPoster);
 
@@ -107,6 +108,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
             String imageUrl = isLandscape() ? movie.getBackdropImageUrl() : movie.getPosterImageUrl();
             Picasso.with(getContext()).load(imageUrl).
+                    placeholder(R.mipmap.flix_launcher).
                     error(R.mipmap.flix_launcher).
                     transform(new RoundedCornersTransformation(10, 10)).into(viewHolder.ivPoster);
             viewHolder.tvTitle.setText(movie.getTitle());
